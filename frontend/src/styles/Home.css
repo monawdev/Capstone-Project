@@ -1,0 +1,47 @@
+.home {
+  padding: 40px;
+}
+
+
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+
+.hero h1 {
+  font-size: 48px;
+}
+
+
+.hero button {
+  padding: 12px 25px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+
+.car-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+
+.car-card {
+  background: white;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+}
+
+
+.car-card img {
+  width: 100%;
+}
+
+
+.car-card button {
+  padding: 10px;
+  cursor: pointer;
+}
