@@ -1,0 +1,25 @@
+.cars-page {
+  padding: 40px;
+}
+
+
+.cars-page h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+
+.search-bar {
+  display: block;
+  width: 300px;
+  padding: 12px;
+  margin: 0 auto 40px;
+}
+
+
+.cars-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
