@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 function App() {
   return (
     <BrowserRouter>
+
       <Navbar />
 
       <Routes>
@@ -22,6 +23,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+
     </BrowserRouter>
   );
 }
