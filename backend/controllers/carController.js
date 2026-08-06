@@ -31,11 +31,18 @@ const getCarById = async (req, res) => {
 // @route   POST /api/cars
 const createCar = async (req, res) => {
   try {
+    console.log("Incoming car:", req.body);
+
     const car = await Car.create(req.body);
 
     res.status(201).json(car);
+
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.log("Create car error:", error.message);
+
+    res.status(400).json({ 
+      message: error.message 
+    });
   }
 };
 
