@@ -5,6 +5,7 @@ const carSchema = new mongoose.Schema(
     brand: {
       type: String,
       required: true,
+      index: true,
     },
 
     model: {
@@ -20,6 +21,7 @@ const carSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: true,
+      index: true,
     },
 
     mileage: {
@@ -46,7 +48,3 @@ const carSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-const Car = mongoose.model("Car", carSchema);
-
-export default Car;
