@@ -22,40 +22,40 @@ function AddCar() {
     };
 
     const handleSubmit = async (e) => {
-  e.preventDefault();
+        e.preventDefault();
 
-  try {
+        try {
 
-    const carData = {
-      ...car,
-      year: Number(car.year),
-      price: Number(car.price.replace(/,/g, "")),
-      mileage: Number(car.mileage),
+            const carData = {
+                ...car,
+                year: Number(car.year),
+                price: Number(car.price.replace(/,/g, "")),
+                mileage: Number(car.mileage),
+            };
+
+            console.log("Sending car:", carData);
+
+            const response = await api.post("/api/cars", carData);
+
+            console.log("Response:", response.data);
+
+            alert("Car added successfully!");
+
+            setCar({
+                brand: "",
+                model: "",
+                year: "",
+                price: "",
+                mileage: "",
+                color: "",
+                description: "",
+                image: "",
+            });
+
+        } catch (error) {
+            console.error("Error adding car:", error);
+        }
     };
-
-    console.log("Sending car:", carData);
-
-    const response = await api.post("/api/cars", carData);
-
-    console.log("Response:", response.data);
-
-    alert("Car added successfully!");
-
-    setCar({
-      brand: "",
-      model: "",
-      year: "",
-      price: "",
-      mileage: "",
-      color: "",
-      description: "",
-      image: "",
-    });
-
-  } catch (error) {
-    console.error("Error adding car:", error);
-  }
-};
 
     return (
         <div className="cars-page">

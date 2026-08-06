@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import CarDetails from "./pages/CarDetails";
 
 import Navbar from "./components/Navbar";
 
@@ -17,39 +18,44 @@ function App() {
 
       <Routes>
 
-        <Route 
-          path="/" 
-          element={<Home />} 
+        <Route
+          path="/"
+          element={<Home />}
         />
 
-        <Route 
-          path="/cars" 
-          element={<Cars />} 
+        <Route
+          path="/cars"
+          element={<Cars />}
         />
 
-        <Route 
-          path="/add-car" 
-          element={<AddCar />} 
+        <Route
+          path="/add-car"
+          element={<AddCar />}
         />
 
-        <Route 
-          path="/login" 
-          element={<Login />} 
+        <Route
+          path="/login"
+          element={<Login />}
         />
 
-        <Route 
-          path="/register" 
-          element={<Register />} 
+        <Route
+          path="/register"
+          element={<Register />}
         />
 
-        <Route 
-          path="/profile" 
-          element={<Profile />} 
+        <Route
+          path="/profile"
+          element={<Profile />}
         />
 
-        <Route 
-          path="*" 
-          element={<NotFound />} 
+        <Route
+          path="/cars/:id"
+          element={<CarDetails />}
+        />
+
+        <Route
+          path="*"
+          element={<NotFound />}
         />
 
       </Routes>
