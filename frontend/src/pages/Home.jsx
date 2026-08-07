@@ -1,15 +1,63 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import CarCard from "../components/CarCard";
+import api from "../services/api";
 import "../styles/Home.css";
 
+
 function Home() {
+
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
+
+
+  const [cars, setCars] = useState([]);
+
+
+
+  useEffect(() => {
+
+    const fetchCars = async () => {
+
+      try {
+
+        const response = await api.get(
+          "/api/cars"
+        );
+
+
+        // Only show 3 featured cars
+        setCars(
+          response.data.slice(0, 3)
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Error loading cars:",
+          error
+        );
+
+      }
+
+    };
+
+
+    fetchCars();
+
+
+  }, []);
+
+
 
   return (
 
     <div className="home-page">
 
 
-      <div className="hero">
-
+      <section className="hero">
 
         <h1>
           Find Your Dream Car
@@ -17,32 +65,84 @@ function Home() {
 
 
         <p>
-          Browse quality used cars from trusted sellers.
+          Browse vehicles, find your next car,
+          or list your own vehicle.
         </p>
 
 
-        <Link to="/cars">
-          <button>
-            Browse Cars
-          </button>
-        </Link>
+
+        <div className="hero-buttons">
+
+          <Link to="/cars">
+
+            <button>
+              Browse Cars
+            </button>
+
+          </Link>
 
 
-      </div>
+
+          {user && (
+
+            <Link to="/add-car">
+
+              <button>
+                Sell Your Car
+              </button>
+
+            </Link>
+
+          )}
+
+        </div>
+
+
+      </section>
 
 
 
-      <div className="features">
+
+      <section className="featured-section">
+
+        <h2>
+          Featured Cars
+        </h2>
+
+
+        <div className="featured-cars">
+
+
+          {cars.map((car) => (
+
+            <CarCard
+              key={car._id}
+              car={car}
+            />
+
+          ))}
+
+
+        </div>
+
+
+      </section>
+
+
+
+
+
+      <section className="features">
 
 
         <div className="feature-card">
 
           <h2>
-            Wide Selection
+            🚗 Browse Cars
           </h2>
 
           <p>
-            Explore different brands, models, and prices.
+            Explore vehicles from different sellers.
           </p>
 
         </div>
@@ -52,11 +152,11 @@ function Home() {
         <div className="feature-card">
 
           <h2>
-            Easy Selling
+            🔐 Secure Accounts
           </h2>
 
           <p>
-            Add your vehicle and reach buyers quickly.
+            Create an account and manage your listings.
           </p>
 
         </div>
@@ -66,17 +166,18 @@ function Home() {
         <div className="feature-card">
 
           <h2>
-            Trusted Marketplace
+            👤 Manage Listings
           </h2>
 
           <p>
-            Find detailed listings with important vehicle information.
+            Add, edit, and delete your own cars.
           </p>
 
         </div>
 
 
-      </div>
+      </section>
+
 
 
     </div>

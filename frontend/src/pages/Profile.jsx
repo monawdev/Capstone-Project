@@ -14,17 +14,21 @@ function Profile() {
   const [cars, setCars] = useState([]);
 
 
+
   useEffect(() => {
 
     const fetchUserCars = async () => {
 
       try {
 
-        const response = await api.get("/api/cars");
+        const response = await api.get(
+          "/api/cars"
+        );
 
 
         const userCars = response.data.filter(
-          (car) => car.owner === user.id
+          (car) =>
+            car.owner === user.id
         );
 
 
@@ -34,7 +38,7 @@ function Profile() {
       } catch (error) {
 
         console.error(
-          "Error fetching profile cars:",
+          "Error fetching cars:",
           error
         );
 
@@ -52,12 +56,47 @@ function Profile() {
 
 
 
+  const handleDelete = async (id) => {
+
+    try {
+
+      await api.delete(
+        `/api/cars/${id}`
+      );
+
+
+      setCars(
+        cars.filter(
+          (car) => car._id !== id
+        )
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "Error deleting car:",
+        error
+      );
+
+    }
+
+  };
+
+
+
   if (!user) {
 
     return (
+
       <div className="cars-page">
-        <h2>Please login first</h2>
+
+        <h2>
+          Please login first
+        </h2>
+
       </div>
+
     );
 
   }
@@ -70,27 +109,41 @@ function Profile() {
 
 
       <h1>
-        Profile
+        My Profile
       </h1>
 
 
+
+      <div className="profile-card">
+
+
+        <h2>
+          {user.name}
+        </h2>
+
+
+        <p>
+          Email: {user.email}
+        </p>
+
+
+        <p>
+          Cars Listed: {cars.length}
+        </p>
+
+
+      </div>
+
+
+
       <h2>
-        Welcome, {user.name}
-      </h2>
-
-
-      <p>
-        Email: {user.email}
-      </p>
-
-
-      <h2>
-        Your Cars
+        My Cars
       </h2>
 
 
 
       <div className="cars-container">
+
 
         {cars.length === 0 ? (
 
@@ -98,18 +151,23 @@ function Profile() {
             You have not listed any cars yet.
           </p>
 
+
         ) : (
+
 
           cars.map((car) => (
 
             <CarCard
               key={car._id}
               car={car}
+              onDelete={handleDelete}
             />
 
           ))
 
+
         )}
+
 
       </div>
 
