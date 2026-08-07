@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import CarDetails from "./pages/CarDetails";
+import EditCar from "./pages/EditCar";
 
 import Navbar from "./components/Navbar";
 
@@ -56,6 +57,11 @@ function App() {
         <Route
           path="*"
           element={<NotFound />}
+        />
+
+        <Route
+          path="/cars/edit/:id"
+          element={<EditCar />}
         />
 
       </Routes>

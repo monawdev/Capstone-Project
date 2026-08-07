@@ -36,6 +36,13 @@ function CarCard({ car, onDelete }) {
       </Link>
 
 
+      <Link to={`/cars/edit/${car._id}`}>
+        <button>
+          Edit
+        </button>
+      </Link>
+
+
       <button
         onClick={() => onDelete(car._id)}
       >
