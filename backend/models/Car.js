@@ -43,11 +43,17 @@ const carSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
-    {
+  {
     timestamps: true,
   }
 );
+
 
 const Car = mongoose.model("Car", carSchema);
 
