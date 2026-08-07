@@ -1,39 +1,77 @@
 import { useState } from "react";
-import "../styles/Auth.css";
+import { useNavigate } from "react-router-dom";
+import api from "../services/api";
+import "../styles/Cars.css";
 
 
 function Login() {
 
-  const [formData, setFormData] = useState({
-    email:"",
-    password:""
-  });
+  const navigate = useNavigate();
 
 
-  const handleChange = (e)=>{
+  const [email, setEmail] = useState("");
 
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-
-  };
+  const [password, setPassword] = useState("");
 
 
-  const handleSubmit=(e)=>{
+
+  const handleSubmit = async (e) => {
 
     e.preventDefault();
 
-    console.log(formData);
+
+    try {
+
+      const response = await api.post(
+        "/api/auth/login",
+        {
+          email,
+          password
+        }
+      );
+
+
+      localStorage.setItem(
+        "token",
+        response.data.token
+      );
+
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(response.data.user)
+      );
+
+
+      alert("Login successful!");
+
+
+      navigate("/profile");
+
+
+    } catch (error) {
+
+      console.error("Login error:", error);
+
+      alert(
+        "Invalid email or password"
+      );
+
+    }
 
   };
+
 
 
   return (
 
-    <div className="auth-container">
+    <div className="cars-page">
 
-      <h1>Login</h1>
+
+      <h1>
+        Login
+      </h1>
+
 
 
       <form onSubmit={handleSubmit}>
@@ -41,20 +79,24 @@ function Login() {
 
         <input
           type="email"
-          name="email"
           placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
         />
+
 
 
         <input
           type="password"
-          name="password"
           placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
         />
+
 
 
         <button type="submit">
@@ -68,6 +110,7 @@ function Login() {
     </div>
 
   );
+
 }
 
 
