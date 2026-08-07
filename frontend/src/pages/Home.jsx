@@ -1,70 +1,89 @@
 import { Link } from "react-router-dom";
-import CarCard from "../components/CarCard";
 import "../styles/Home.css";
 
 function Home() {
 
-  const featuredCars = [
-    {
-      id: 1,
-      name: "Toyota Camry",
-      year: 2023,
-      price: 28000,
-      image: "https://via.placeholder.com/300"
-    },
-    {
-      id: 2,
-      name: "Honda Civic",
-      year: 2022,
-      price: 24000,
-      image: "https://via.placeholder.com/300"
-    },
-    {
-      id: 3,
-      name: "BMW 3 Series",
-      year: 2024,
-      price: 45000,
-      image: "https://via.placeholder.com/300"
-    }
-  ];
-
-
   return (
-    <div className="home">
 
-      <section className="hero">
-        <h1>Find Your Dream Car</h1>
+    <div className="home-page">
+
+
+      <div className="hero">
+
+
+        <h1>
+          Find Your Dream Car
+        </h1>
+
 
         <p>
-          Buy and sell vehicles easily with Car Marketplace.
+          Browse quality used cars from trusted sellers.
         </p>
+
 
         <Link to="/cars">
           <button>
             Browse Cars
           </button>
         </Link>
-      </section>
 
 
-      <section>
-        <h2>Featured Cars</h2>
+      </div>
 
-        <div className="car-container">
 
-          {featuredCars.map((car) => (
-            <CarCard 
-              key={car.id}
-              car={car}
-            />
-          ))}
+
+      <div className="features">
+
+
+        <div className="feature-card">
+
+          <h2>
+            Wide Selection
+          </h2>
+
+          <p>
+            Explore different brands, models, and prices.
+          </p>
 
         </div>
 
-      </section>
+
+
+        <div className="feature-card">
+
+          <h2>
+            Easy Selling
+          </h2>
+
+          <p>
+            Add your vehicle and reach buyers quickly.
+          </p>
+
+        </div>
+
+
+
+        <div className="feature-card">
+
+          <h2>
+            Trusted Marketplace
+          </h2>
+
+          <p>
+            Find detailed listings with important vehicle information.
+          </p>
+
+        </div>
+
+
+      </div>
+
 
     </div>
+
   );
+
 }
+
 
 export default Home;

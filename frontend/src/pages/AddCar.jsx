@@ -25,19 +25,13 @@ function AddCar() {
         e.preventDefault();
 
         try {
-
-            const carData = {
+            const formattedCar = {
                 ...car,
-                year: Number(car.year),
                 price: Number(car.price.replace(/,/g, "")),
-                mileage: Number(car.mileage),
+                mileage: Number(car.mileage.replace(/,/g, ""))
             };
 
-            console.log("Sending car:", carData);
-
-            const response = await api.post("/api/cars", carData);
-
-            console.log("Response:", response.data);
+            await api.post("/api/cars", formattedCar);
 
             alert("Car added successfully!");
 
@@ -49,7 +43,7 @@ function AddCar() {
                 mileage: "",
                 color: "",
                 description: "",
-                image: "",
+                image: ""
             });
 
         } catch (error) {

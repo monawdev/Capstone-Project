@@ -23,7 +23,6 @@ function Cars() {
     fetchCars();
   }, []);
 
-
   const handleDelete = async (id) => {
     try {
       await api.delete(`/api/cars/${id}`);
@@ -56,6 +55,7 @@ function Cars() {
     <div className="cars-page">
 
       <h1>Available Cars</h1>
+
 
       <input
         type="text"
