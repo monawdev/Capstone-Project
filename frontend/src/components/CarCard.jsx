@@ -1,7 +1,20 @@
 import { Link } from "react-router-dom";
 import "../styles/CarCard.css";
 
+
 function CarCard({ car, onDelete }) {
+
+
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
+
+
+  const isOwner =
+    user &&
+    car.owner === user.id;
+
+
 
   return (
 
@@ -14,45 +27,51 @@ function CarCard({ car, onDelete }) {
       />
 
 
-      <div className="car-info">
+      <h2>
+        {car.brand} {car.model}
+      </h2>
 
 
-        <h2>
-          {car.brand} {car.model}
-        </h2>
+      <p>
+        Year: {car.year}
+      </p>
 
 
-        <p>
-          Year: {car.year}
-        </p>
+      <p className="price">
+        Price: ${Number(car.price).toLocaleString()}
+      </p>
 
 
-        <p>
-          Mileage: {Number(car.mileage).toLocaleString()} miles
-        </p>
+      <p>
+        Mileage: {Number(car.mileage).toLocaleString()} miles
+      </p>
 
 
-        <p className="price">
-          ${Number(car.price).toLocaleString()}
-        </p>
+      <p>
+        Color: {car.color}
+      </p>
 
 
 
-        <div className="card-buttons">
+      <Link to={`/cars/${car._id}`}>
+        <button>
+          View Details
+        </button>
+      </Link>
 
 
-          <Link to={`/cars/${car._id}`}>
-            <button>
-              View Details
-            </button>
-          </Link>
 
+      {isOwner && (
+
+        <>
 
 
           <Link to={`/cars/edit/${car._id}`}>
+
             <button>
               Edit
             </button>
+
           </Link>
 
 
@@ -64,10 +83,9 @@ function CarCard({ car, onDelete }) {
           </button>
 
 
-        </div>
+        </>
 
-
-      </div>
+      )}
 
 
     </div>
