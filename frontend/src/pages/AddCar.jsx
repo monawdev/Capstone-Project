@@ -1,8 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import "../styles/Cars.css";
 
+
 function AddCar() {
+
+  const navigate = useNavigate();
+
 
   const [car, setCar] = useState({
     brand: "",
@@ -14,6 +19,13 @@ function AddCar() {
     description: "",
     image: "",
   });
+
+
+  const [message, setMessage] = useState("");
+
+  const [error, setError] = useState("");
+
+  const [loading, setLoading] = useState(false);
 
 
 
@@ -32,40 +44,30 @@ function AddCar() {
 
     e.preventDefault();
 
+    setMessage("");
+
+    setError("");
+
+    setLoading(true);
+
+
 
     try {
-
-      const user = JSON.parse(
-        localStorage.getItem("user")
-      );
-
-
-      if (!user) {
-
-        alert("Please login before adding a car");
-
-        return;
-
-      }
-
 
 
       const formattedCar = {
 
         ...car,
 
+        year: Number(car.year),
 
         price: Number(
           car.price.replace(/,/g, "")
         ),
 
-
         mileage: Number(
           car.mileage.replace(/,/g, "")
         ),
-
-
-        owner: user.id
 
       };
 
@@ -78,33 +80,32 @@ function AddCar() {
 
 
 
-      alert("Car added successfully!");
+      setMessage(
+        "Car added successfully!"
+      );
 
 
 
-      setCar({
+      setTimeout(() => {
 
-        brand: "",
-        model: "",
-        year: "",
-        price: "",
-        mileage: "",
-        color: "",
-        description: "",
-        image: ""
+        navigate("/profile");
 
-      });
+      }, 1000);
 
 
 
     } catch (error) {
 
 
-      console.error(
-        "Error adding car:",
-        error
+      setError(
+        error.response?.data?.message ||
+        "Could not add car"
       );
 
+
+    } finally {
+
+      setLoading(false);
 
     }
 
@@ -123,6 +124,26 @@ function AddCar() {
 
 
 
+      {message && (
+
+        <p>
+          {message}
+        </p>
+
+      )}
+
+
+
+      {error && (
+
+        <p className="error-message">
+          {error}
+        </p>
+
+      )}
+
+
+
       <form onSubmit={handleSubmit}>
 
 
@@ -131,6 +152,7 @@ function AddCar() {
           value={car.brand}
           onChange={handleChange}
           placeholder="Brand"
+          required
         />
 
 
@@ -140,6 +162,7 @@ function AddCar() {
           value={car.model}
           onChange={handleChange}
           placeholder="Model"
+          required
         />
 
 
@@ -149,6 +172,7 @@ function AddCar() {
           value={car.year}
           onChange={handleChange}
           placeholder="Year"
+          required
         />
 
 
@@ -157,7 +181,8 @@ function AddCar() {
           name="price"
           value={car.price}
           onChange={handleChange}
-          placeholder="Price (example: 86,600)"
+          placeholder="Price"
+          required
         />
 
 
@@ -166,7 +191,8 @@ function AddCar() {
           name="mileage"
           value={car.mileage}
           onChange={handleChange}
-          placeholder="Mileage (example: 12,500)"
+          placeholder="Mileage"
+          required
         />
 
 
@@ -176,6 +202,7 @@ function AddCar() {
           value={car.color}
           onChange={handleChange}
           placeholder="Color"
+          required
         />
 
 
@@ -185,6 +212,7 @@ function AddCar() {
           value={car.image}
           onChange={handleChange}
           placeholder="Image URL"
+          required
         />
 
 
@@ -194,12 +222,17 @@ function AddCar() {
           value={car.description}
           onChange={handleChange}
           placeholder="Description"
+          required
         />
 
 
 
         <button type="submit">
-          Add Car
+
+          {loading
+            ? "Adding..."
+            : "Add Car"}
+
         </button>
 
 
