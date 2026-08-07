@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
-import "../styles/Cars.css";
+import "../styles/Auth.css";
 
 
 function Login() {
@@ -9,9 +9,24 @@ function Login() {
   const navigate = useNavigate();
 
 
-  const [email, setEmail] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-  const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+
+
+
+  const handleChange = (e) => {
+
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+
+  };
 
 
 
@@ -19,15 +34,14 @@ function Login() {
 
     e.preventDefault();
 
+    setError("");
+
 
     try {
 
       const response = await api.post(
         "/api/auth/login",
-        {
-          email,
-          password
-        }
+        formData
       );
 
 
@@ -43,18 +57,14 @@ function Login() {
       );
 
 
-      alert("Login successful!");
-
-
       navigate("/profile");
 
 
     } catch (error) {
 
-      console.error("Login error:", error);
-
-      alert(
-        "Invalid email or password"
+      setError(
+        error.response?.data?.message ||
+        "Invalid login"
       );
 
     }
@@ -65,46 +75,65 @@ function Login() {
 
   return (
 
-    <div className="cars-page">
+    <div className="auth-page">
 
 
-      <h1>
-        Login
-      </h1>
+      <div className="auth-card">
 
 
-
-      <form onSubmit={handleSubmit}>
-
-
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
-        />
-
-
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-        />
-
-
-
-        <button type="submit">
+        <h1>
           Login
-        </button>
+        </h1>
 
 
-      </form>
+        <p>
+          Welcome back to Car Marketplace
+        </p>
+
+
+
+        {error && (
+
+          <p className="error-message">
+            {error}
+          </p>
+
+        )}
+
+
+
+        <form onSubmit={handleSubmit}>
+
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+
+
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+
+
+
+          <button type="submit">
+            Login
+          </button>
+
+
+        </form>
+
+
+      </div>
 
 
     </div>
