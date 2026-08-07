@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import "../styles/CarCard.css";
 
-function CarCard({ car }) {
+function CarCard({ car, onDelete }) {
   return (
     <div className="car-card">
 
-      <img 
-        src={car.image} 
-        alt={`${car.brand} ${car.model}`} 
+      <img
+        src={car.image}
+        alt={`${car.brand} ${car.model}`}
       />
 
       <h2>
@@ -28,11 +28,19 @@ function CarCard({ car }) {
         Color: {car.color}
       </p>
 
+
       <Link to={`/cars/${car._id}`}>
         <button>
           View Details
         </button>
       </Link>
+
+
+      <button
+        onClick={() => onDelete(car._id)}
+      >
+        Delete
+      </button>
 
     </div>
   );

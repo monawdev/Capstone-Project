@@ -23,20 +23,38 @@ function Cars() {
     fetchCars();
   }, []);
 
+
+  const handleDelete = async (id) => {
+    try {
+      await api.delete(`/api/cars/${id}`);
+
+      setCars(
+        cars.filter((car) => car._id !== id)
+      );
+
+    } catch (error) {
+      console.error("Error deleting car:", error);
+    }
+  };
+
+
   const filteredCars = cars.filter((car) => {
-  const searchTerm = search.toLowerCase().trim();
+    const searchTerm = search.toLowerCase().trim();
 
-  const carName = `${car.brand} ${car.model}`.toLowerCase();
+    const carName = `${car.brand} ${car.model}`.toLowerCase();
 
-  return carName.includes(searchTerm);
-});
+    return carName.includes(searchTerm);
+  });
+
 
   if (loading) {
     return <h2>Loading cars...</h2>;
   }
 
+
   return (
     <div className="cars-page">
+
       <h1>Available Cars</h1>
 
       <input
@@ -47,18 +65,27 @@ function Cars() {
         onChange={(e) => setSearch(e.target.value)}
       />
 
+
       <div className="cars-container">
+
         {filteredCars.length === 0 ? (
           <p>No cars found.</p>
         ) : (
+
           filteredCars.map((car) => (
+
             <CarCard
               key={car._id}
               car={car}
+              onDelete={handleDelete}
             />
+
           ))
+
         )}
+
       </div>
+
     </div>
   );
 }
