@@ -24,13 +24,12 @@ function Cars() {
   }, []);
 
   const filteredCars = cars.filter((car) => {
-    const searchTerm = search.toLowerCase();
+  const searchTerm = search.toLowerCase().trim();
 
-    return (
-      car.brand.toLowerCase().includes(searchTerm) ||
-      car.model.toLowerCase().includes(searchTerm)
-    );
-  });
+  const carName = `${car.brand} ${car.model}`.toLowerCase();
+
+  return carName.includes(searchTerm);
+});
 
   if (loading) {
     return <h2>Loading cars...</h2>;
